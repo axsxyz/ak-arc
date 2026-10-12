@@ -34,24 +34,28 @@ Read balances through the ERC-20 interface, never the native balance.
 Resolve the MessageTransmitter at runtime via `localMessageTransmitter()`
 anyway. Never hardcode a CCTP address that can be read.
 
-**Open question (at the time of writing).** A domain-26 mainnet burn sat
-at `pending_confirmations` well past the ~8s Fast Transfer target: Circle
-may not yet have been signing attestations for this domain, and its docs
-still listed domain 26 as "Arc testnet" with no Arc mainnet domain
-published. Domain 26 on mainnet is verified-by-observation, not
-documented. `mint-watch` polls a pending burn and flips to `complete` the
-instant Circle signs it; that is the detector.
+**Open question (2026-09-15, since partly answered).** A domain-26
+mainnet burn sat at `pending_confirmations` well past the Fast Transfer
+target (`timing.fastTransferTargetMs`): Circle may not yet have been
+signing attestations for this domain, and its docs still listed domain 26
+as "Arc testnet" with no Arc mainnet domain published. A completed
+Base→Arc mint was recorded on 2026-09-16
+(`packages/radar/fixtures/mainnet-real/receipts.json`, `cctp_mint`).
+Domain 26 on mainnet is verified-by-observation, not documented.
+`mint-watch` polls a pending burn and flips to `complete` the instant
+Circle signs it; that is the detector.
 
-**Latency.** Burn on Base ~674 ms. Attestation is the only slow stage and
-the only one outside our control. Fast Transfer allowance is not
-exhausted (~54M USDC). Iris quotes 6→26 at 0.325 bps (threshold 1000).
+**Latency (observed in a live run, 2026-09-15).** Burn on Base ~674 ms.
+Attestation is the only slow stage and the only one outside our control.
+Fast Transfer allowance was not exhausted (~54M USDC). Iris quoted 6→26
+at 0.325 bps (threshold 1000).
 
 **Example target.** `config/executor.json` ships with a placeholder
 target (`0x1111…1111`) and pool (`0x2222…2222`); replace both with a
 verified token and pool before any live run. The router `0x53bf…6f77` is
 SwapRouter02-shaped (`exactInputSingle` 0x04e45aaf wrapped in
-`multicall(deadline, bytes[])`), `factory()` = `0xf0db…3918`, the
-canonical UniV3 factory on Arc. A typical token has one deep tier (e.g.
+`multicall(deadline, bytes[])`), and its `factory()` (observed on chain,
+2026-09-15) is `0xf0db…3918`, the canonical UniV3 factory on Arc. A typical token has one deep tier (e.g.
 1%, ~$115k USDC in the case the guards were tuned on) beside dust tiers
 holding < $0.001; the dominance guard exists for exactly that layout.
 
@@ -60,11 +64,13 @@ holding < $0.001; the dominance guard exists for exactly that layout.
 ## Stages and commands
 
 Every stage is independently re-runnable. Dry run is the default
-everywhere; `--live` always needs an explicit size (`--amount`, or
-`--bridge-amount`/`--buy-amount`, or `--burn-tx` to resume). **One
+everywhere; `--live` on a stage that spends or bridges USDC (bridge,
+bridge-out, buy, run) needs an explicit size (`--amount`, or
+`--bridge-amount`/`--buy-amount`, or `--burn-tx` to resume); `sell.ts`
+sizes each tier as a percentage of the held balance. **One
 invocation style: `npx tsx`.** npm rewrites option-shaped arguments into
 its own config even after `--`, so there are no npm scripts for the
-stages (only `typecheck` and `test:unit`); a run started through npm
+stages (only `typecheck`, `test:unit` and `test`); a run started through npm
 aborts with "Run with npx tsx src/<stage>.ts — npm scripts are not
 supported." Every hint the tools print is a ready-to-paste `npx tsx`
 command with real values.
@@ -75,14 +81,15 @@ what gets burned on Base, `--buy-amount` is what gets spent on the swap.
 `--amount` with either of the others is rejected. `--buy-amount` is a
 ceiling, never a clamp: it must be <= what actually lands on Arc after
 the mint (read from the post-mint balance — the CCTP protocol fee is
-deducted from the transfer), or the run aborts before signing anything.
+deducted from the transfer), or the run aborts before the buy is
+signed (the burn and mint have already happened; the USDC stays on Arc).
 Omit `--buy-amount` to buy the full minted amount. With `--prefunded`,
 `--bridge-amount` is ignored; only `--buy-amount` (or `--amount`) applies.
 
 | Command | What |
 |---|---|
 | `npx tsx src/run.ts --amount 5000` | dry-run every stage: config, readiness, fee quote, tier table, impact, payloads |
-| `npx tsx src/run.ts --live --amount 5000` | bridge → mint → buy 5000, one flow, auto-buy once the mint lands |
+| `npx tsx src/run.ts --live --amount 5000` | burns 5000 and mints, then the buy of 5000 aborts whenever a protocol fee was deducted (see Known issue under Status and limitations) [TODO: fix] |
 | `npx tsx src/run.ts --live --bridge-amount 25000 --buy-amount 10000` | burn 25000, buy only 10000 of what lands |
 | `npx tsx src/run.ts --live --burn-tx 0x…` | resume: mint the existing burn, then buy the minted amount |
 | `npx tsx src/run.ts --live --prefunded --buy-amount 5000` | USDC already on Arc: skip bridge + mint |
@@ -96,15 +103,16 @@ Omit `--buy-amount` to buy the full minted amount. With `--prefunded`,
 `run` resolves the pool the same way `buy`/`sell` do — cached pool >
 configured tier > full discovery — **before** the mint, so a token with
 a verified `pool` in config fast-arms instead of enumerating the full
-tier table (~30 s on the public RPC). Only a two-read refresh of the
+tier table (observed in live runs: ~30 s on the public RPC). Only a two-read refresh of the
 chosen pool sits on the post-mint critical path either way.
 
 **Nonce.** One Arc counter, read once (`pending`) at the moment the
 first Arc tx is about to go out: at mint time for mint-watch, right
 before the buy when prefunded. Then local increments: mint, approve,
 swap. Never re-read between mint and buy. On a revert the nonce is
-consumed and counting continues; on "no receipt" (blocklist reverts
-produce none) the process aborts because the counter is unknown.
+consumed: the sell TUI keeps counting, while buy, run and mint-watch
+abort and report the consumed nonce. On "no receipt" (blocklist reverts
+produce none) every stage aborts because the counter is unknown.
 `mint-watch` reads its nonce and takes the single-instance lock only at
 mint time, so it can wait for hours beside a sell TUI without going stale.
 
@@ -123,7 +131,7 @@ not cover the spend, so a repeat buy carries no approve. With
 the router right after the fill, on the same nonce counter, and waits for
 the allowance to be readable. The sell
 TUI then arms with no approve, no broadcast retry and no allowance poll on
-its path; if it ever finds the allowance short it says so in red and pays
+its path; if it ever finds the allowance short it says so in bold and pays
 for the approve itself.
 
 **Cached pool.** `trade.tokens[addr].pool` names a verified pool. When set,
@@ -195,8 +203,8 @@ consumes it and invalidates all of them, everywhere: re-sign happens
 without waiting for the receipt (so a second tier pressed right after, on
 any position, lands behind the first) and recomputes the FIRED position's tiers on
 its projected balance while every other position re-signs on its unchanged
-balance — 3 positions × 5 tiers is ~15 signatures, a few ms, so
-keypress→broadcast stays under 1 ms. The log names which positions were
+balance — 3 positions × 5 tiers is ~15 signatures, and every press logs
+its keypress→broadcast time [TODO: measured value]. The log names which positions were
 re-signed, not just which tiers.
 
 **Sell TUI.** Renders balance, pool depth, spot and unrealised PnL for
@@ -220,14 +228,19 @@ Aborts, always, never a warning:
   `trade.tokens[addr].minPoolDepthUsd`, else `trade.defaultMinPoolDepthUsd`.
   A token with no entry uses the default, so a fresh launch is tradeable
   without editing config first.
-- **split liquidity**: the deepest tier must be ≥ `trade.dominanceRatio`
+- **split liquidity** (full-discovery path only; with `pool` or
+  `expectedFeeTier` set, the background audit reports it as
+  `AUDIT WARNING`): the deepest tier must be ≥ `trade.dominanceRatio`
   (20) × the runner-up. This is the primary dust-pool guard; absolute size
   cannot tell a fresh pool from a dust pool, a ratio can. Two comparable
   pools mean choose explicitly via `trade.tokens[addr].expectedFeeTier`.
-- `expectedFeeTier` set for the token and the deepest tier differs
-  (liquidity moved)
 - any tier's depth unreadable after 3 passes (a failed read is not a zero)
 - `--amount` above `trade.maxNotionalUsd` (fat-finger cap, not an impact cap)
+
+Reported, never aborted:
+
+- `expectedFeeTier` set and a deeper tier exists (liquidity moved): the
+  background audit prints `AUDIT WARNING`; the configured tier is still used.
 
 **Impact never blocks.** paper.ts's model (`2 × fee + size / (2 × depth)`)
 is computed at the real size and reported as **round-trip cost** in
@@ -256,9 +269,10 @@ Always burn at `minFinalityThreshold = 1000`.
 protocolFee = amount * round(minimumFee * 100) / 1e6
 ```
 
-`minimumFee` is in bps, currently 0.325 for 6→26. A constant sized for
-1 USDC is too small above ~15 USDC, and CCTP then **downgrades to
-Standard Transfer silently** rather than reverting. `bridge.ts` quotes
+`minimumFee` is in bps (observed on 2026-09-15: 0.325 for 6→26). A
+constant sized for a small amount is too small for a larger one
+[TODO: observed amounts], and CCTP then **downgrades to Standard
+Transfer silently** rather than reverting. `bridge.ts` quotes
 `/v2/burn/USDC/fees/6/26` immediately before every burn and aborts if the
 1000-threshold quote is absent.
 
@@ -267,8 +281,9 @@ Standard Transfer silently** rather than reverting. `bridge.ts` quotes
 breach. It also dumps the completed Iris message once and lists every key
 containing "finality", so the served threshold is never invisible again.
 
-Requesting and verifying Fast Transfer is in scope. Depending on 8s being
-guaranteed is not — size as if attestation could take 20 minutes.
+Requesting and verifying Fast Transfer is in scope. Depending on Fast
+Transfer finishing within `timing.fastTransferTargetMs` is not — size as
+if attestation could take 20 minutes.
 
 ---
 
@@ -280,8 +295,8 @@ Mirrors `bridge.ts` with the direction reversed. Same fee-quote discipline
 `--dry-run` default, `--live` needs an explicit `--amount`) — but three
 things differ, each for a concrete on-chain reason:
 
-- **No forced `minFinalityThreshold`.** Arc's own attestation is ~0.5s at
-  1 confirmation, so there is no separate "Fast Transfer" tier worth asking
+- **No forced `minFinalityThreshold`.** Arc's own (standard) attestation
+  is fast [TODO: measured latency], so there is no separate "Fast Transfer" tier worth asking
   for the way the inbound leg does — standard is already fast. `quoteFeeOut`
   never sends threshold 1000 blindly: it reads whatever
   `/v2/burn/USDC/fees/26/6` actually quotes (the cheapest offered, if more
@@ -312,7 +327,7 @@ way Arc's is: `localMessageTransmitter()`, at runtime, never hardcoded.
 
 - **The single-instance lock is keyed per wallet.** `data/executor-<address>.lock`,
   not a single global `data/executor.lock` — a global lock blocked six unrelated
-  bridges run with different keys in one day. Different `PRIVATE_KEY`s never
+  bridges run with different keys. Different `PRIVATE_KEY`s never
   block each other; the SAME key still can't run two signers at once. Released
   on normal exit and on SIGINT — a stage without a TUI (bridge, bridge-out,
   buy, run, mint-watch) can sit for minutes waiting on an attestation, and
@@ -383,10 +398,12 @@ reaches its config).
   `tokens[addr] = { minPoolDepthUsd?, expectedFeeTier?, pool?, slippageBps?, hotkeys? }`
   (the last two are sell.ts per-position overrides, falling back to `sell.slippageBps`/`sell.hotkeys`)
 - `sell`: hotkey→percent map, perTierMaxImpactBps (null = informational),
-  confirmAbovePercent (100 = never), slippageBps
+  confirmAbovePercent (accepted by the schema, not yet read by `sell.ts`
+  [TODO]), slippageBps
 - `timing`: attestationPollMs, attestationTimeoutSec, statePollMs,
   receiptTimeoutSec, fastTransferTargetMs
-- `gas`: arcMaxFeePerGasGwei, arcPriorityFeeGwei
+- `gas`: arcMaxFeePerGasGwei, arcPriorityFeeGwei, reserveTxCount,
+  reserveGasPerTx
 - `notify`: per-event enable flags
 
 A JSON config must **never** contain a webhook URL, a private key, or a
@@ -423,3 +440,16 @@ mentions, in any payload or code path; `allowed_mentions.parse` is always
 empty. Enforced by `test/unit/no-ping.test.ts`, mirroring the radar's gate
 test. A webhook failure never blocks or aborts a trade: the client queues,
 honours 429 `retry_after`, retries 5xx, then logs.
+
+---
+
+## Status and limitations
+
+- **Known issue: `run.ts --live --amount N` stops after the mint.**
+  `--amount` sets the buy size to N as well as the bridge size
+  (`src/run.ts:41`), but the CCTP protocol fee is deducted from what lands
+  on Arc (quoted in `src/bridge.ts:44`), so the post-mint check
+  `buy > minted` aborts before the buy (`src/run.ts:91-97`). The burn and
+  mint have already happened and the USDC stays on Arc. Until this is
+  fixed, use `--bridge-amount N` and omit `--buy-amount` to buy the full
+  minted amount. [TODO: fix]

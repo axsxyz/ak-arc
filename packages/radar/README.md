@@ -2,7 +2,7 @@
 
 A 24/7 on-chain liquidity radar for **Arc (Circle L1)**. It watches pools, launchpads, labeled wallets and watchlist tokens and posts Discord embeds to four channels: `#smart-flow`, `#major-coins`, `#launchpads` and `#alerts`. Only four hard rules can ping `@everyone`.
 
-> **Current state: testnet plumbing.** The default network is **Arc Testnet (5042002)**. The ecosystem tokens and pad tokens in `config/watchlists/` are **mainnet (5042)** contracts: 16/18 have no code on testnet; on mainnet all 31 configured CAs (tokens, launchers, factories, routers) have code (probe via rpc.arc-scan.org, 2026-09-14). On testnet the bot runs end to end, but its output is **not market data**. Every testnet embed says so. Flip to mainnet (below) for real signals.
+> **Current state: testnet plumbing.** The default network is **Arc Testnet (5042002)**. The ecosystem tokens and pad tokens in `config/watchlists/` are **mainnet (5042)** contracts: all 15 have no code on testnet (observed on 2026-09-15 by the testnet chain probe: 15 of 17 watched CAs missing); on mainnet all 31 CAs configured on 2026-09-14 (tokens, launchers, factories, routers) had code (probe via rpc.arc-scan.org), and the two CCTP contracts added 2026-09-15 bring the set to 33 [TODO: re-run `npm run probe:mainnet`]. On testnet the bot runs end to end, but its output is **not market data**. Every testnet embed says so. Flip to mainnet (below) for real signals.
 
 Observe → score → alert. No trading.
 
@@ -51,7 +51,7 @@ One variable: `ARC_NETWORK=testnet|mainnet`. The code paths are identical.
 
 **HTTP vs WSS on mainnet.**
 - The public RPC `ARC_MAINNET_HTTP_URL=https://rpc.arc-scan.org` (chain 5042, no key) works for the **HTTP tools** `test:chain-probe`, `discover:onchain` and `discover:factories`. For `discover:onchain` you can raise `RPC_GETLOGS_MAX_RANGE`: 5,000 worked, 50,000 returned 503.
-- The **live bot on mainnet refuses to start without `ARC_MAINNET_WSS_URL`** (exit 2). 24/7 ingest needs `newHeads`/`logs` subscriptions, so attach a QuickNode Arc Mainnet WSS endpoint.
+- The **live bot on mainnet refuses to start without `ARC_MAINNET_WSS_URL`** (exit 2) **unless `ALLOW_MAINNET_HTTP_POLLING=1`** (the `mainnet-poll` profile, see below). WSS (`newHeads`/`logs` subscriptions) is the low-latency path, so attach a QuickNode Arc Mainnet WSS endpoint when you can.
 - Testnet keeps its HTTP polling fallback.
 
 **Safety rails**
@@ -62,7 +62,7 @@ One variable: `ARC_NETWORK=testnet|mainnet`. The code paths are identical.
 
 **Flip to mainnet**
 1. Add `ARC_MAINNET_WSS_URL` (required) and ideally a matching `ARC_MAINNET_HTTP_URL` from the same QuickNode Arc Mainnet endpoint; the public HTTP RPC is only for probe/discovery. See [RPC limits](#rpc-limits).
-2. `ARC_NETWORK=mainnet npm run test:chain-probe`: expect the critical majors `OK` (last run: 31/31 CAs with code). Remove `ALLOW_EMPTY_CHAIN=1` from `.env` for mainnet so a wrong RPC fails loudly.
+2. `ARC_NETWORK=mainnet npm run test:chain-probe`: expect the critical majors `OK` (last recorded run, 2026-09-14: 31/31 CAs with code; the set is now 33 [TODO: re-run]). Remove `ALLOW_EMPTY_CHAIN=1` from `.env` for mainnet so a wrong RPC fails loudly.
 3. Recalibrate thresholds for mainnet (e.g. `ALERT_LP_USD=50000`).
 4. Use a separate `DB_PATH` per network (or keep the default; all tables are keyed by chain id).
 5. `ARC_NETWORK=mainnet npm run harness`, then `npm start`.
@@ -75,7 +75,7 @@ Arc mainnet is already live on the public RPC `https://rpc.arc-scan.org` (HTTP o
 
 ```bash
 cd packages/radar
-npm run probe:mainnet            # 31/31 CAs should be OK
+npm run probe:mainnet            # 33/33 CAs should be OK [TODO: confirm with a fresh run]
 npm run start:mainnet-poll       # Ctrl+C to stop
 ```
 
@@ -94,15 +94,15 @@ npm run start:mainnet-poll       # Ctrl+C to stop
 3. Confirm USDC mirror decimals.
 4. Boot probe: `getCode` on all watchlist CAs.
 5. Mark "live from now". Anything older only updates state and never posts.
-6. **Warm start**: replay the last `WARM_START_HOURS` (default 6h ≈ 43k blocks). This took ~6 min on 2026-09-14 and seeds pools and their trust, pad launch stats, Warp curves, and major baselines.
+6. **Warm start**: replay the last `WARM_START_HOURS` (6 h in this profile ≈ 43k blocks at ~2 blocks/s; the built-in default is 0 = off). It seeds pools and their trust, pad launch stats, Warp curves, and major baselines. Observed on 2026-09-14: it took ~6 min.
 7. Poll every `POLL_INTERVAL_MS` (1s). Each poll fetches `[lastHead+1, head]`. Events produced *during* the warm start are posted once caught up, with their real `T+Xs` delay.
 
-Measured freshness: ~1.4–2.1s behind the chain (the WSS target is <1s).
+Observed in a live polling run: ~1.4–2.1 s behind the chain (the code's own estimate for polling is ~2–3 s, `src/config/env.ts`; WSS is the low-latency path [TODO: WSS latency target]).
 
 **Fallbacks.**
 - **Transport:** with a WSS URL the bot uses WebSocket (reconnect 1→30s backoff, stall watchdog `HEAD_STALL_SEC`, re-fetch `[lastHead, head]` over HTTP after reconnect). Without one it uses HTTP polling (testnet always; mainnet only with `ALLOW_MAINNET_HTTP_POLLING=1`).
 - **Poll errors:** the poll is retried with exponential backoff up to 30s. Blocks produced during the outage are fetched on recovery, up to `BACKFILL_MAX_BLOCKS` (profile 20,000 ≈ 2.8h). Beyond that it logs `GAP_TOO_LARGE` and fetches only the tail.
-- **`getLogs` errors:** transient errors are retried (4×, backoff). Then the range is **halved recursively** down to one block. A block that still fails is logged as `backfill failed` (visible, never silent).
+- **`getLogs` errors:** transient errors are retried (up to 4 attempts, exponential backoff from 250 ms). Then the range is **halved recursively** down to one block. A block that still fails is logged as `backfill failed` (visible, never silent).
 - **Restart:** warm start rebuilds memory. With `WARM_START_HOURS=0` the bot resumes from the block cursor persisted in SQLite (`DB_PATH`, profile `data/radar-mainnet.sqlite`).
 - **Discord:** a per-channel queue, `429 retry_after`, and 5xx retries; otherwise the error is logged.
 - **Not automatic:** no failover between RPC providers. One RPC per run; switching = change profile/URL and restart.
@@ -119,7 +119,7 @@ Measured freshness: ~1.4–2.1s behind the chain (the WSS target is <1s).
 | Command | What it proves |
 |---|---|
 | `npm run test:unit` | Math golden vectors (6-dec mirror vs 18-dec native, sqrtPriceX96 → price, mcap, velocity, migrate_ratio). Decode of every fixture log. V3 topics match TollyPad's testnet bytecode. Network switch, watchlists, probe gate. |
-| `npm run test:fixtures` | Replays 14 ABI-encoded scenarios (`fixtures/events/`) through the full pipeline with a fake chain and clock, and snapshots the exact Discord payloads (`fixtures/expected/`). No network. |
+| `npm run test:fixtures` | Replays 18 ABI-encoded scenarios (`fixtures/events/`) through the full pipeline with a fake chain and clock, and snapshots the exact Discord payloads (`fixtures/expected/`). No network. |
 | `npm run test:alerts` | The ping/no-ping matrix, dedupe, reconnect gap backfill (≤5-block chunks, no double posts), spoofed pools, digest/leaderboard acceptance, embed contract. Static check: `@everyone` / `ping_everyone: true` exist only in the gate and payload builder. |
 | `npm run test:chain-probe` | Live `eth_chainId` and a table of `address, symbol, kind, priority, code_bytes, chain_id, status` → `data/chain-probe-<network>.json`. |
 | `npm run test:webhooks:dry` | One sample embed per channel, printed. POSTs only with `ALLOW_LIVE_WEBHOOKS=1`. |
@@ -137,10 +137,10 @@ WSS endpoint ─ eth_subscribe newHeads ─► HeadTracker ─ gap? ─► chunk
                             decode → features (pools, vol buckets, LP windows, pads, majors, holders, wallets)
                                    → rules (LP_SURGE, PAD_MIGRATE_HOT, WATCHLIST_WALLET_FAST, MAJOR_ANOMALY, …)
                                    → Router (60s severity-aware dedupe) → gate (only ping authority) → embeds → webhook queue
-                            cold path (async): SQLite events, alert_fires, precision samples, signal_fires/samples, pool_meta, cursor, reported_missing
+                            cold path: SQLite events, signal_fires/samples, pool_meta (deferred, setImmediate); alert_fires + precision samples (sync, just before the #alerts post), cursor (sync, ≤ every 5 s), reported_missing (boot probe)
 ```
 
-- Hot path is in-process; no DB on the alert path. `T+Xs` on every embed = now − block timestamp.
+- Hot path is in-process; the only DB write on the alert path is the synchronous `alert_fires`/`precision_samples` insert for a hard-rule `#alerts` fire (`src/jobs/precision.ts`). `T+Xs` on every event embed = now − block timestamp (digests and leaderboards omit it).
 - WS reconnect uses exponential backoff with jitter, a stall watchdog (`HEAD_STALL_SEC`) and auto-resubscribe. After a reconnect, `[lastHead, chainHead]` is always re-fetched. The block cursor is persisted, so a restart backfills the gap (bounded by `BACKFILL_MAX_BLOCKS`; beyond that it logs `GAP_TOO_LARGE` and keeps only the tail).
 - No WSS URL → HTTP head polling fallback.
 - The heartbeat (every 60s, **logs only**) reports head, lag_ms, pool count and decoded-event counters.
@@ -227,7 +227,7 @@ Measures which signals would have made money **before** any threshold tuning or 
 
 **What is recorded (live bot).**
 - **`signal_fires`**: every *routed* signal with a scoring direction, in any channel (NEW_LAUNCH, LP_WATCH, LP_REMOVE, EARLY_BUYER_DENSITY, BRIDGE_FLOW, hard rules, …). Muted warm-start history and logs-only refusals are not recorded.
-  - Meta signals are not scored: MAJOR_DIGEST, PAD_LEADERBOARD, MISSING_ON_CHAIN.
+  - Meta signals are not scored: MAJOR_DIGEST, PAD_LEADERBOARD, MISSING_ON_CHAIN, BRIDGE_NET_FLOW.
   - Each row stores type, channel, ping, token, pool, direction, usd, price at fire (with its source), pool fee, pool USDC depth, event/fired time and `detect_lag_ms`.
   - The write is deferred with `setImmediate`.
 - **Direction** per type lives in one table, `SIGNAL_DIRECTION` (`src/score/paper.ts`): `LP_REMOVE` = **avoid** (scored as the price drop avoided); every other scored type = **long**.
@@ -278,7 +278,7 @@ tokens:
 **DEX factories** (needed for trusted pools and major pings) go in `launchpads.yaml` under `dex:` as `{ name, factory, kind: univ2|univ3 }`.
 **Bridges** (Ellipse) go in `infra.yaml` under `bridge[].contracts: ["0x…"]`. USDC mirror transfers to or from them are scored as `BRIDGE_FLOW`.
 
-**CCTP** (the active bridge signal on mainnet) goes in `infra.yaml` under `cctp: { message_transmitter, token_messenger, local_minter, source_domain, source_domain_label }`. `message_transmitter`'s `MessageReceived` + the paired USDC mint (a `Transfer(0x0 -> recipient)` on the chain's `usdcSystemEmitter`, **not** the USDC mirror address — see `config/networks.ts`) fire `BRIDGE_INFLOW`; `token_messenger`'s `DepositForBurn` fires `BRIDGE_OUTFLOW`. `source_domain`/`source_domain_label` are the fallback shown when `MessageReceived`'s own `sourceDomain` field isn't decoded (its event ABI is reconstructed from Circle's public interface, not independently verified against Arc bytecode — see `src/abi/cctp.ts`; a decode miss only costs that enrichment, never the signal). A CCTP arrival ≥ `BRIDGE_FOLLOW_MIN_USD` starts following that wallet for `BRIDGE_FOLLOW_MINUTES`: its next buy (AMM swap or bonding-curve trade) fires `BRIDGE_DEPLOY` with the token, pool, size, time since arrival, and whatever the radar already tracks for that token (pool depth, holders≈/top10% if tracked since birth, buy/sell 1h, pool age). `BRIDGE_NET_FLOW` posts a rolling 5m/1h inflow/outflow/net digest every `BRIDGE_DIGEST_SEC`, skipped when both windows are flat.
+**CCTP** (the active bridge signal on mainnet) goes in `infra.yaml` under `cctp: { message_transmitter, token_messenger, local_minter, source_domain, source_domain_label }`. `message_transmitter`'s `MessageReceived` + the paired USDC mint (a `Transfer(0x0 -> recipient)` on the chain's `usdcSystemEmitter`, **not** the USDC mirror address — see `src/config/networks.ts`) fire `BRIDGE_INFLOW`; `token_messenger`'s `DepositForBurn` fires `BRIDGE_OUTFLOW`. `source_domain`/`source_domain_label` are the fallback shown when `MessageReceived`'s own `sourceDomain` field isn't decoded (its event ABI was verified against a recorded Arc mainnet mint — see `src/abi/cctp.ts` and `test/fixtures/mainnet-real.test.ts`; a decode miss would only cost that enrichment, never the signal). A CCTP arrival ≥ `BRIDGE_FOLLOW_MIN_USD` starts following that wallet for `BRIDGE_FOLLOW_MINUTES`: each of its buys in that window (AMM swap or bonding-curve trade) fires `BRIDGE_DEPLOY` with the token, pool, size, time since arrival, and whatever the radar already tracks for that token (pool depth, holders≈/top10% if tracked since birth, buy/sell 1h, pool age). `BRIDGE_NET_FLOW` posts a rolling 5m/1h inflow/outflow/net digest every `BRIDGE_DIGEST_SEC`, skipped when both windows are flat.
 
 Watchlists **hot-reload**: saving a YAML re-runs the boot probe and resubscribes. Invalid YAML is rejected, and the previous lists are kept.
 
@@ -333,12 +333,12 @@ Addresses are matched lowercase. Use `networks: { testnet: {…}, mainnet: {…}
 - **Logs**: pino JSON (`LOG_LEVEL`). Pipe to `pino-pretty` locally.
 
 ### RPC limits
-QuickNode's Discover plan caps `eth_getLogs` at **5 blocks** (`RPC_GETLOGS_MAX_RANGE=5`; Arc blocks are ~0.5s). A 20-minute gap is ~480 chunks × 2 filters at `RPC_MAX_RPS`. Raise both on a paid plan.
+QuickNode's Discover plan caps `eth_getLogs` at **5 blocks** (`RPC_GETLOGS_MAX_RANGE=5`; Arc blocks are ~0.5s). A 20-minute gap is ~480 chunks × up to 3 filters (DEX topics, watched Transfers, CCTP) at `RPC_MAX_RPS`. Raise both on a paid plan.
 
 ## Known gaps / TODO
 - **Pads still TODO on mainnet**: Sharc, Argus and Long have no factory CA; Dyor has routers but no factory. RadarDEX's curve launcher `0x62d6…073A` has no decoder, since it produced no logs in 600k blocks.
-- **Graduations**: Warp's live implementation replaced `Migrated`/`Graduated` with unnamed events, and WarpDex's 5-arg `PairCreated` has no logs yet. So `PAD_MIGRATE_HOT` currently only fires for `generic` pads. Lift, Tolly and RadarDEX have no bonding curve (the pool exists at launch).
+- **Graduations**: Warp's graduation event on the live (upgraded) implementation is not decoded yet [TODO: record its topic], and WarpDex's 5-arg `PairCreated` has no logs yet. So `PAD_MIGRATE_HOT` currently only fires for `generic` pads. Lift, Tolly and RadarDEX have no bonding curve (the pool exists at launch).
 - **Ellipse bridge** contract CAs are unknown, so its generic `BRIDGE_FLOW` is inactive until they're added. CCTP (Base↔Arc) is active — see the venue table above.
-- CCTP's `MessageReceived` sourceDomain is best-effort (event ABI not independently verified on Arc); a decode miss falls back to `infra.yaml`'s `cctp.source_domain`, which is correct as long as only one corridor is wired.
-- `holders≈` counts Transfer participants (24h); `top10%` is `n/a` unless tracked since token birth. Funder clusters only see USDC transfers the radar subscribes to.
+- CCTP's `MessageReceived` ABI is verified against one recorded Arc mainnet mint (`src/abi/cctp.ts`); if `sourceDomain` is ever not decoded, the embed falls back to `infra.yaml`'s `cctp.source_domain`, which is correct as long as only one corridor is wired.
+- `holders≈` and `top10%` are `n/a` until the holder backfill has synced from token birth (Σbalances == totalSupply). Funder clusters only see USDC transfers the radar subscribes to.
 - Token/token pools (no USDC side) are not USD-scored in v1.
