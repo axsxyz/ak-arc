@@ -1,0 +1,8 @@
+# FIXTURE watchlist (tests only). COOL "exists" in the fixture chain; Architects does not.
+tokens:
+  - symbol: COOL
+    address: "0xeb64987643db71c76b2a2be7e723decc995e5b37"
+    priority: critical
+  - symbol: Architects
+    address: "0x8bcb94279fc2c984ec34e0c1f2192df8c69ea4f0"
+    priority: critical

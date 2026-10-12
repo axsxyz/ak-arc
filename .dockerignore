@@ -1,0 +1,11 @@
+# Docker build context for packages/radar/Dockerfile (built from the repo root).
+**/node_modules
+**/.env
+**/.env.*
+**/data
+**/fixtures
+**/test
+**/docs
+.git
+packages/executor/*
+!packages/executor/package.json

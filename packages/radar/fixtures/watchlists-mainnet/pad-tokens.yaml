@@ -1,0 +1,4 @@
+tokens:
+  - symbol: WARP
+    address: "0x384c60f98ecd4c26345499345c03d677e40f115e"
+    pad: FixturePad

@@ -1,0 +1,20 @@
+# Protocol tokens of launchpads — size when pad wins volume share
+tokens:
+  - symbol: LIFT
+    address: "0xb43b5f6f47dae0aacaf04be21dc2f7c5fcb60087"
+    pad: Lift
+  - symbol: ARGUS
+    address: "0xece5ca8bf9220718e5727754026757512212cb3c"
+    pad: Argus
+  - symbol: TOLLY
+    address: "0xbc43ce8dec648ea298c4275559b81d6261c90b67"
+    pad: Tolly
+  - symbol: LONG
+    address: "0x2164bb17a2d38c1b5170e987b2c0416df1efc752"
+    pad: Long
+  - symbol: WARP
+    address: "0x384c60f98ecd4c26345499345c03d677e40f115e"
+    pad: Warp
+  - symbol: SHARC
+    address: "0x99b37b7fccAA7a1030617b6195eB3045c523BB97"
+    pad: Sharc

@@ -1,0 +1,27 @@
+{
+  "name": "@ak-arc/executor",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "CCTP bridge (Base -> Arc) and bounded swap executor for Arc. Holds the repo's only signing key.",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test:unit": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning vitest run test/unit",
+    "test": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning vitest run"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "viem": "^2.56.5",
+    "zod": "^4.6.4"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "cross-env": "^10.1.0",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0"
+  }
+}

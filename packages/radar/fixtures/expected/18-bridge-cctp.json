@@ -1,0 +1,293 @@
+{
+  "posts": [
+    {
+      "channel": "smart-flow",
+      "payload": {
+        "embeds": [
+          {
+            "title": "BRIDGE_INFLOW",
+            "color": 15105570,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[USDC 0xffff…fffe](https://www.arcexplorer.org/token/0xfffffffffffffffffffffffffffffffffffffffe)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "CCTP inflow (Base (assumed))",
+                "inline": true
+              },
+              {
+                "name": "usd",
+                "value": "$50.00k",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0xaa00…aa01](https://www.arcexplorer.org/tx/0xaa00000000000000000000000000000000000000000000000000000000aa01)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+0.0s",
+                "inline": true
+              },
+              {
+                "name": "recipient",
+                "value": "[0x2222…2222](https://www.arcexplorer.org/address/0x2222000000000000000000000000000000002222)",
+                "inline": true
+              },
+              {
+                "name": "since prev arrival",
+                "value": "first seen",
+                "inline": true
+              },
+              {
+                "name": "inflow 5m",
+                "value": "$50.00k",
+                "inline": true
+              },
+              {
+                "name": "inflow 1h",
+                "value": "$50.00k",
+                "inline": true
+              }
+            ],
+            "footer": {
+              "text": "arc-mainnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:36:48.000Z",
+            "url": "https://www.arcexplorer.org/token/0xfffffffffffffffffffffffffffffffffffffffe"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    },
+    {
+      "channel": "smart-flow",
+      "payload": {
+        "embeds": [
+          {
+            "title": "BRIDGE_DEPLOY · COOL",
+            "color": 15105570,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[COOL 0xeb64…5b37](https://www.arcexplorer.org/token/0xeb64987643db71c76b2a2be7e723decc995e5b37)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "UniswapV3-Arc",
+                "inline": true
+              },
+              {
+                "name": "usd",
+                "value": "$100.00",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0xaa00…aa02](https://www.arcexplorer.org/tx/0xaa00000000000000000000000000000000000000000000000000000000aa02)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+0.0s",
+                "inline": true
+              },
+              {
+                "name": "wallet",
+                "value": "[0x2222…2222](https://www.arcexplorer.org/address/0x2222000000000000000000000000000000002222)",
+                "inline": true
+              },
+              {
+                "name": "bridged in",
+                "value": "$50.00k · 0.1m ago",
+                "inline": true
+              },
+              {
+                "name": "buy/sell 1h",
+                "value": "buys only",
+                "inline": true
+              }
+            ],
+            "footer": {
+              "text": "arc-mainnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:36:56.000Z",
+            "url": "https://www.arcexplorer.org/token/0xeb64987643db71c76b2a2be7e723decc995e5b37"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    },
+    {
+      "channel": "smart-flow",
+      "payload": {
+        "embeds": [
+          {
+            "title": "BRIDGE_INFLOW",
+            "color": 15105570,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[USDC 0xffff…fffe](https://www.arcexplorer.org/token/0xfffffffffffffffffffffffffffffffffffffffe)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "CCTP inflow (domain 6)",
+                "inline": true
+              },
+              {
+                "name": "usd",
+                "value": "$30.00k",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0xaa00…aa04](https://www.arcexplorer.org/tx/0xaa00000000000000000000000000000000000000000000000000000000aa04)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+0.0s",
+                "inline": true
+              },
+              {
+                "name": "recipient",
+                "value": "[0x2222…2222](https://www.arcexplorer.org/address/0x2222000000000000000000000000000000002222)",
+                "inline": true
+              },
+              {
+                "name": "since prev arrival",
+                "value": "10s",
+                "inline": true
+              },
+              {
+                "name": "inflow 5m",
+                "value": "$80.00k",
+                "inline": true
+              },
+              {
+                "name": "inflow 1h",
+                "value": "$80.00k",
+                "inline": true
+              }
+            ],
+            "footer": {
+              "text": "arc-mainnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:36:58.000Z",
+            "url": "https://www.arcexplorer.org/token/0xfffffffffffffffffffffffffffffffffffffffe"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    },
+    {
+      "channel": "smart-flow",
+      "payload": {
+        "embeds": [
+          {
+            "title": "BRIDGE_OUTFLOW",
+            "color": 15105570,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[USDC 0x3600…0000](https://www.arcexplorer.org/token/0x3600000000000000000000000000000000000000)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "CCTP outflow (domain 6)",
+                "inline": true
+              },
+              {
+                "name": "usd",
+                "value": "$50.00k",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0xaa00…aa03](https://www.arcexplorer.org/tx/0xaa00000000000000000000000000000000000000000000000000000000aa03)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+0.0s",
+                "inline": true
+              },
+              {
+                "name": "depositor",
+                "value": "[0xb121…0b12](https://www.arcexplorer.org/address/0xb121000000000000000000000000000000000b12)",
+                "inline": true
+              },
+              {
+                "name": "outflow 5m",
+                "value": "$50.00k",
+                "inline": true
+              },
+              {
+                "name": "outflow 1h",
+                "value": "$50.00k",
+                "inline": true
+              }
+            ],
+            "footer": {
+              "text": "arc-mainnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:37:04.000Z",
+            "url": "https://www.arcexplorer.org/token/0x3600000000000000000000000000000000000000"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "type": "BRIDGE_INFLOW",
+      "channel": "smart-flow",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": 50000
+    },
+    {
+      "type": "BRIDGE_DEPLOY",
+      "channel": "smart-flow",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": 100
+    },
+    {
+      "type": "BRIDGE_INFLOW",
+      "channel": "smart-flow",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": 30000
+    },
+    {
+      "type": "BRIDGE_OUTFLOW",
+      "channel": "smart-flow",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": 50000
+    }
+  ],
+  "getLogsRanges": []
+}

@@ -1,0 +1,144 @@
+{
+  "posts": [
+    {
+      "channel": "alerts",
+      "payload": {
+        "embeds": [
+          {
+            "title": "MISSING_ON_CHAIN · 2 watchlist CAs",
+            "description": "eth_getCode returned empty on chain 5042002 (arc-testnet). These are skipped — no metrics, no prices. Ecosystem tokens and launchpads are likely mainnet (5042) assets: attach a mainnet RPC.",
+            "color": 15105570,
+            "fields": [
+              {
+                "name": "contracts",
+                "value": "• **Architects** (major, critical) [0x8bcb…a4f0](https://testnet.arcscan.app/address/0x8bcb94279fc2c984ec34e0c1f2192df8c69ea4f0)\n• **WARP** (pad-token) [0x384c…115e](https://testnet.arcscan.app/address/0x384c60f98ecd4c26345499345c03d677e40f115e)",
+                "inline": false
+              },
+              {
+                "name": "data",
+                "value": "testnet plumbing — not market intel",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "arc-testnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:35:00.000Z"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    },
+    {
+      "channel": "major-coins",
+      "payload": {
+        "embeds": [
+          {
+            "title": "MAJOR_DIGEST · COOL",
+            "color": 3447003,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[COOL 0xeb64…5b37](https://testnet.arcscan.app/token/0xeb64987643db71c76b2a2be7e723decc995e5b37)",
+                "inline": true
+              },
+              {
+                "name": "price",
+                "value": "$0.02081 · pool reserves · $101.60k pool",
+                "inline": true
+              },
+              {
+                "name": "mcap",
+                "value": "$20.81M",
+                "inline": true
+              },
+              {
+                "name": "vol 1m",
+                "value": "$0",
+                "inline": true
+              },
+              {
+                "name": "vol 5m",
+                "value": "$2.80k",
+                "inline": true
+              },
+              {
+                "name": "vol 1h",
+                "value": "$2.80k",
+                "inline": true
+              },
+              {
+                "name": "lp (USDC)",
+                "value": "$101.60k",
+                "inline": true
+              },
+              {
+                "name": "ΔLP 1h",
+                "value": "$0",
+                "inline": true
+              },
+              {
+                "name": "buy/sell 1h",
+                "value": "6.00",
+                "inline": true
+              },
+              {
+                "name": "holders≈",
+                "value": "n/a",
+                "inline": true
+              },
+              {
+                "name": "top10% (ex LP/burn/venues)",
+                "value": "n/a",
+                "inline": true
+              },
+              {
+                "name": "pools (trusted/all)",
+                "value": "1/1",
+                "inline": true
+              },
+              {
+                "name": "holders data",
+                "value": "not tracked",
+                "inline": false
+              },
+              {
+                "name": "data",
+                "value": "testnet plumbing — not market intel",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "arc-testnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:38:21.500Z"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "type": "MISSING_ON_CHAIN",
+      "channel": "alerts",
+      "ping": false,
+      "reason": "alerts (no-ping type)",
+      "suppressed": null,
+      "usd": null
+    },
+    {
+      "type": "MAJOR_DIGEST",
+      "channel": "major-coins",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": null
+    }
+  ],
+  "getLogsRanges": []
+}

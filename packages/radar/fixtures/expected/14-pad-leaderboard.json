@@ -1,0 +1,307 @@
+{
+  "posts": [
+    {
+      "channel": "launchpads",
+      "payload": {
+        "embeds": [
+          {
+            "title": "NEW_LAUNCH · Tolly",
+            "color": 3447003,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[MEME 0xaaaa…a001](https://testnet.arcscan.app/token/0xaaaa00000000000000000000000000000000a001)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "Tolly (univ3 fee 10000)",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0x3900…60d6](https://testnet.arcscan.app/tx/0x39008553bdb4b8048585acad898ed905a03a2103c73d8c9d0fdfc3241e8d60d6)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "pool",
+                "value": "[0x9001…9001](https://testnet.arcscan.app/address/0x9001000000000000000000000000000000009001)",
+                "inline": true
+              },
+              {
+                "name": "quote",
+                "value": "USDC",
+                "inline": true
+              },
+              {
+                "name": "data",
+                "value": "testnet plumbing — not market intel",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "arc-testnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:35:00.000Z",
+            "url": "https://testnet.arcscan.app/token/0xaaaa00000000000000000000000000000000a001"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    },
+    {
+      "channel": "launchpads",
+      "payload": {
+        "embeds": [
+          {
+            "title": "NEW_LAUNCH · Tolly",
+            "color": 3447003,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[MEME2 0xaaaa…a002](https://testnet.arcscan.app/token/0xaaaa00000000000000000000000000000000a002)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "Tolly (univ3 fee 10000)",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0x7d10…b37c](https://testnet.arcscan.app/tx/0x7d1068472b705a2046dd43e0100f7b289717927ad551ebdc296eea642f6fb37c)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "pool",
+                "value": "[0x9002…9002](https://testnet.arcscan.app/address/0x9002000000000000000000000000000000009002)",
+                "inline": true
+              },
+              {
+                "name": "quote",
+                "value": "USDC",
+                "inline": true
+              },
+              {
+                "name": "data",
+                "value": "testnet plumbing — not market intel",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "arc-testnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:35:00.000Z",
+            "url": "https://testnet.arcscan.app/token/0xaaaa00000000000000000000000000000000a002"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    },
+    {
+      "channel": "launchpads",
+      "payload": {
+        "embeds": [
+          {
+            "title": "NEW_LAUNCH · FixturePad",
+            "color": 3447003,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[WMEME 0xbbbb…b001](https://testnet.arcscan.app/token/0xbbbb00000000000000000000000000000000b001)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "FixturePad",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0x02bf…0bba](https://testnet.arcscan.app/tx/0x02bf21c86dd998f7b330d1d4ea829909d5ab33a5b6aa9fc31ddab709e12e0bba)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "name",
+                "value": "Warp Meme",
+                "inline": true
+              },
+              {
+                "name": "creator",
+                "value": "[0x3333…3333](https://testnet.arcscan.app/address/0x3333000000000000000000000000000000003333)",
+                "inline": true
+              },
+              {
+                "name": "data",
+                "value": "testnet plumbing — not market intel",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "arc-testnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:35:35.000Z",
+            "url": "https://testnet.arcscan.app/token/0xbbbb00000000000000000000000000000000b001"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    },
+    {
+      "channel": "launchpads",
+      "payload": {
+        "embeds": [
+          {
+            "title": "PAD_GRADUATED · FixturePad",
+            "color": 15105570,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[WMEME 0xbbbb…b001](https://testnet.arcscan.app/token/0xbbbb00000000000000000000000000000000b001)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "FixturePad",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0x3e25…05b3](https://testnet.arcscan.app/tx/0x3e25c73dee18adcdf49546b3b49a23052ace2260b8095842c5e3bafecb4f05b3)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "pool",
+                "value": "[0x9004…9004](https://testnet.arcscan.app/address/0x9004000000000000000000000000000000009004)",
+                "inline": true
+              },
+              {
+                "name": "migrate_ratio 24h",
+                "value": "100.0%",
+                "inline": true
+              },
+              {
+                "name": "data",
+                "value": "testnet plumbing — not market intel",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "arc-testnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:35:40.000Z",
+            "url": "https://testnet.arcscan.app/token/0xbbbb00000000000000000000000000000000b001"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    },
+    {
+      "channel": "launchpads",
+      "payload": {
+        "embeds": [
+          {
+            "title": "PAD_LEADERBOARD · winning pad: Tolly",
+            "description": "Pad USDC vol 1h $2.30k of tracked ecosystem $2.30k.",
+            "color": 3447003,
+            "fields": [
+              {
+                "name": "Tolly",
+                "value": "1h: 2 launched · 0 grad (0.0%) · vol $1.50k\n24h: 2 launched · 0 grad (0.0%) · vol $1.50k\nshare 1h: 65.2%",
+                "inline": false
+              },
+              {
+                "name": "FixturePad",
+                "value": "1h: 1 launched · 1 grad (100.0%) · vol $800.00\n24h: 1 launched · 1 grad (100.0%) · vol $800.00\nshare 1h: 34.8% · median t→$69k: 0m",
+                "inline": false
+              },
+              {
+                "name": "data",
+                "value": "testnet plumbing — not market intel",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "arc-testnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:36:41.500Z"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "type": "NEW_LAUNCH",
+      "channel": "launchpads",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": null
+    },
+    {
+      "type": "NEW_LAUNCH",
+      "channel": "launchpads",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": null
+    },
+    {
+      "type": "NEW_LAUNCH",
+      "channel": "launchpads",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": null
+    },
+    {
+      "type": "PAD_GRADUATED",
+      "channel": "launchpads",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": null
+    },
+    {
+      "type": "PAD_LEADERBOARD",
+      "channel": "launchpads",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": null
+    }
+  ],
+  "getLogsRanges": []
+}

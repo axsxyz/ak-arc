@@ -1,0 +1,59 @@
+{
+  "route": {
+    "baseDomain": 6,
+    "arcDomain": 26,
+    "baseChainId": 8453,
+    "arcChainId": 5042,
+    "minFinalityThreshold": 1000,
+    "maxFeeMargin": 3
+  },
+  "trade": {
+    "targetToken": "0x1111111111111111111111111111111111111111",
+    "router": "0x53bf6b0684ec7ef91e1387da3d1a1769bc5a6f77",
+    "factories": ["0xf0db7b58379503491d857db50ac9ece64c653918"],
+    "feeTiers": [100, 500, 2500, 3000, 10000],
+    "defaultMinPoolDepthUsd": 2000,
+    "dominanceRatio": 20,
+    "maxNotionalUsd": 25000,
+    "slippageBps": 300,
+    "deadlineSec": 60,
+    "approveOnFill": true,
+    "tokens": {
+      "0x1111111111111111111111111111111111111111": {
+        "minPoolDepthUsd": 50000,
+        "expectedFeeTier": 10000,
+        "pool": "0x2222222222222222222222222222222222222222"
+      }
+    }
+  },
+  "sell": {
+    "hotkeys": { "1": 10, "2": 25, "3": 50, "4": 75, "5": 100 },
+    "perTierMaxImpactBps": null,
+    "confirmAbovePercent": 100,
+    "slippageBps": 300
+  },
+  "timing": {
+    "attestationPollMs": 2000,
+    "attestationTimeoutSec": 43200,
+    "statePollMs": 1000,
+    "receiptTimeoutSec": 90,
+    "fastTransferTargetMs": 30000
+  },
+  "gas": {
+    "arcMaxFeePerGasGwei": 100,
+    "arcPriorityFeeGwei": 1,
+    "reserveTxCount": 6,
+    "reserveGasPerTx": 300000
+  },
+  "notify": {
+    "bridge.burn_sent": true,
+    "bridge.attestation_pending": true,
+    "bridge.attestation_complete": true,
+    "bridge.downgrade_detected": true,
+    "bridge.mint_complete": true,
+    "trade.preflight": true,
+    "trade.fill": true,
+    "trade.sell": true,
+    "error.abort": true
+  }
+}

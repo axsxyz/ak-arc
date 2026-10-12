@@ -1,0 +1,15 @@
+{
+  "name": "09-missing-on-chain",
+  "description": "Boot probe: Architects (critical major) and WARP pad token have no code → one aggregated MISSING_ON_CHAIN in #alerts, no ping. Restart with same DB → no repost.",
+  "steps": [
+    {
+      "op": "boot",
+      "clockMs": 1789000500000
+    },
+    {
+      "op": "boot",
+      "clockMs": 1789000560000,
+      "freshProcess": true
+    }
+  ]
+}

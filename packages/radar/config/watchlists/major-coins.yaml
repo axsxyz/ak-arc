@@ -1,0 +1,50 @@
+# All addresses lowercased for matching; display symbol as given.
+# priority: critical | high | medium
+tokens:
+  - symbol: Architects
+    address: "0x8bcb94279fc2c984ec34e0c1f2192df8c69ea4f0"
+    priority: critical
+    venues: [dyorv3, radardex]
+    notes: Community token, high activity
+
+  - symbol: COOL
+    address: "0xeb64987643db71c76b2a2be7e723decc995e5b37"
+    priority: critical
+    pair_hint: COOL/USDC
+    venues: [radardex]
+    notes: Largest market cap in the set
+
+  - symbol: Arcat
+    address: "0x07704b06981ea962b87296362a1281484d160000"
+    priority: high
+    notes: Early ecosystem token
+
+  - symbol: Arcash
+    address: "0x0bffa97f774824e9da843699aedd2835cb1b8022"
+    priority: medium
+    notes: Game token — track flows
+
+  - symbol: Steve
+    address: "0xa23632d6a32174ff4ee8e76aacf9f244e10cfd73"
+    priority: high
+    notes: Early ecosystem token
+
+  - symbol: BARC
+    address: "0x4753c45fb550fecaa143a47968659117e6ffc2ce"
+    priority: medium
+    notes: Community token
+
+  - symbol: Buildog
+    address: "0x4cb8382b9daf7992d3b27d32f7db650c57881daa"
+    priority: medium
+    notes: Community token
+
+  - symbol: CRCL
+    address: "0xd40ed72054bce37d2284bb315ffca122b690dc4b"
+    priority: high
+    notes: Community token
+
+  - symbol: bull
+    address: "0x4cc878731ae13276c72455663a83dc985d953553"
+    priority: high
+    notes: Community token

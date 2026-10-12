@@ -1,0 +1,77 @@
+{
+  "posts": [
+    {
+      "channel": "major-coins",
+      "payload": {
+        "embeds": [
+          {
+            "title": "MAJOR_ANOMALY",
+            "description": "5m vol $6.40k vs 1h baseline $500.00/5m → z=263.9 (threshold 5).",
+            "color": 15158332,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[COOL 0xeb64…5b37](https://www.arcexplorer.org/token/0xeb64987643db71c76b2a2be7e723decc995e5b37)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "0x9bad…c001",
+                "inline": true
+              },
+              {
+                "name": "usd",
+                "value": "$6.40k",
+                "inline": true
+              },
+              {
+                "name": "velocity",
+                "value": "$1.28k/min",
+                "inline": true
+              },
+              {
+                "name": "mcap",
+                "value": "$21.00M",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0xe220…1e05](https://www.arcexplorer.org/tx/0xe220997c183beb41ec620274070680e31f69f7d2f44cbef33ecb4ba080c91e05)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "baseline samples",
+                "value": "56 min",
+                "inline": true
+              }
+            ],
+            "footer": {
+              "text": "arc-mainnet | radar v1"
+            },
+            "timestamp": "2026-09-10T01:36:00.000Z",
+            "url": "https://www.arcexplorer.org/token/0xeb64987643db71c76b2a2be7e723decc995e5b37"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "type": "MAJOR_ANOMALY",
+      "channel": "major-coins",
+      "ping": false,
+      "reason": "downgraded: usdCertain=true trusted=false",
+      "suppressed": null,
+      "usd": 6400
+    }
+  ],
+  "getLogsRanges": []
+}

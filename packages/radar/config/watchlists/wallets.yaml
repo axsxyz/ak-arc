@@ -1,0 +1,2 @@
+# Labeled wallets to watch. address lowercase; tags free-form (e.g. [smart, early-buyer, deployer]).
+wallets: []   # { address, label, tags[] }

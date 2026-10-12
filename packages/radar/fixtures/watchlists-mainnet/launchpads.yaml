@@ -1,0 +1,18 @@
+# FIXTURE (tests only): mainnet-shaped allowlist using the real Warp launch proxy + canonical UniV3 factory.
+pads:
+  - name: Warp
+    networks:
+      mainnet:
+        factories:
+          - { address: "0x0dCad158e98bC24455f9e94F46709d8a5F6D1255", kind: warp, label: launch-factory }
+  - name: Lift
+    networks:
+      mainnet:
+        factories:
+          - { address: "0x3f29dD25D1F6ad3D09d1d4A880F8a869E3039153", kind: lift, label: factory }
+dex:
+  - name: UniswapV3-Arc
+    networks:
+      mainnet:
+        factories:
+          - { address: "0xf0db7b58379503491d857db50ac9ece64c653918", kind: univ3 }

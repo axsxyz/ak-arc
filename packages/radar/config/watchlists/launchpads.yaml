@@ -1,0 +1,125 @@
+# Launchpads + DEX venues. Runtime reads this file only (launchpads.discovered.yaml is the curated evidence it is built from).
+#
+# Per-network: `networks.<testnet|mainnet>` overrides factory/router/kind/factories/routers/aux.
+# factories[].kind:  univ2|univ3 = AMM factory (pool provenance root for the @everyone gate)
+#                    lift|tolly|warp|radar = mainnet launcher adapter (src/decode/adapters.ts)
+#                    generic = placeholder ABI · todo = code verified, no decoder (probed only, never trusted)
+# factories[].role:  launch (default for launchers) | amm (default for univ2/univ3) | migration
+# Every mainnet CA below is listed in launchpads.discovered.yaml (getCode > 0 on chain 5042, 2026-09-14) and was
+# re-verified 2026-09-14 via rpc.arc-scan.org: bytecode topics + real logs over the last 600k blocks (~84h).
+# Pad tokens = protocol/launchpad coins to size IF pad wins flow (see pad-tokens.yaml).
+
+pads:
+  - name: Lift
+    url: https://lift.fun
+    example_token_page: https://lift.fun/token/0xb43b5f6f47dae0aacaf04be21dc2f7c5fcb60087
+    pad_token: "0xb43b5f6f47dae0aacaf04be21dc2f7c5fcb60087"
+    priority: high
+    notes: Launch creates a USDC/token pool on canonical UniV3 (0xf0db…3918) in the same tx; trading = V3 swaps.
+    networks:
+      mainnet:
+        factories:
+          # 276 launch logs / 84h. Launch topic 0x71582b1e… is unnamed (not in signature DBs); layout verified from logs.
+          - { address: "0x3f29dD25D1F6ad3D09d1d4A880F8a869E3039153", kind: lift, label: factory }
+        aux:
+          fee_locker: "0x98015DDa2B8810ab67903C726a0E424D6D51b1a9"
+          lp_vault: "0x826D695E64A44C0347982EDA6D3183F12eB1AC4F"
+
+  - name: Argus
+    url: https://arguspad.io
+    example_token_page: https://arguspad.io/token/0xece5ca8bf9220718e5727754026757512212cb3c
+    pad_token: "0xece5ca8bf9220718e5727754026757512212cb3c"
+    factory: null # TODO: factory not labeled in site SSR — deeper chunk scrape
+    priority: high
+
+  - name: Tolly
+    url: https://tollylabs.com
+    example_token_page: https://tollylabs.com/token/0xbc43ce8dec648ea298c4275559b81d6261c90b67
+    pad_token: "0xbc43ce8dec648ea298c4275559b81d6261c90b67"
+    notes: Fixed-supply + permanently locked USDC LP; no bonding curve. Fee split documented on guide.
+    priority: critical
+    # Same CA, different contracts per chain:
+    #   testnet 5042002: Uniswap V3 factory (PoolCreated/Swap/Mint/Burn topics) -> univ3, pools are launches
+    #   mainnet 5042:    custom pad; TokenCreated(token,creator,name,symbol,pool,…) + Launched + DevBuy (303 launches/84h),
+    #                    pools live on canonical UniV3 0xf0db…3918
+    networks:
+      testnet:
+        factories:
+          - { address: "0xcad7ee36ac193bf2eddb7b3e2736c5bdb8269c8b", kind: univ3, role: launch, label: TollyPad-v3 }
+      mainnet:
+        factories:
+          - { address: "0xcad7ee36ac193bf2eddb7b3e2736c5bdb8269c8b", kind: tolly, label: TollyPad }
+        routers: ["0xceBC2e409A85CFA82B086674e6bc5bEd51692777"] # TollySwapRouter (no code on testnet)
+
+  - name: Long
+    url: https://long.supply
+    example_token_page: https://long.supply/0x2164bb17a2d38c1b5170e987b2c0416df1efc752
+    pad_token: "0x2164bb17a2d38c1b5170e987b2c0416df1efc752"
+    factory: null # TODO: page chunk had no factory CA — deeper scrape
+    notes: Tokenized assets on Arc. Treat as RWA/stock-paired flow.
+    priority: critical
+
+  - name: Warp
+    url: https://circlewarp.fun
+    example_token_page: https://circlewarp.fun/trade/0x384c60f98ecd4c26345499345c03d677e40f115e
+    pad_token: "0x384c60f98ecd4c26345499345c03d677e40f115e"
+    notes: Bonding curve; migrate ~$69k MC to WarpDex; CCTP intents / cross-chain buy narrative. Watch Ellipse overlap for bridge→pad.
+    priority: critical
+    networks:
+      mainnet:
+        factories:
+          # EIP-1967 proxy (events are emitted here). Live implementation read from the proxy slot on 2026-09-14 is
+          # 0xb3b6…334f — upgraded vs the impl listed in the discovered file (kept below as aux). 107 TokenCreated/84h.
+          - { address: "0x0dCad158e98bC24455f9e94F46709d8a5F6D1255", kind: warp, label: launch-factory }
+          # WarpDex: UniV2-compatible (getPair/createPair present, allPairsLength=1). Its PairCreated has 5 args
+          # (0xa2d65e38…, no logs seen yet) -> not decoded; pairs are trusted via pair.factory() + getPair round-trip.
+          - { address: "0x32330C2400a6e0830D56661169eBB6C147E3577a", kind: univ2, role: migration, label: WarpDex-factory }
+        routers: ["0x9D93c1B22E3fa6C817835513E76082089E98A9D7"] # WarpDex router
+        aux:
+          launch_factory_impl_listed: "0x34988939648578a1d90Db742bc1C903fD6F7c1b0"
+
+  - name: Dyor
+    url: https://dyorv3.org
+    pad_token: null
+    notes: Architects also traded here. TODO factory (routers only; v1 router bytecode is a "PumpRouter", not a factory).
+    priority: high
+    networks:
+      mainnet:
+        routers:
+          - "0x33c2bfa0684342B210B62Ca7E92ABE3feCB0BFa3"
+          - "0xcc9C4253A164F44526d2A8d33c3f7A3FFBd491ce" # dyorV1Router
+
+  - name: Sharc
+    url: https://sharc.fun
+    example_token_page: https://sharc.fun/token/0x99b37b7fccAA7a1030617b6195eB3045c523BB97
+    pad_token: "0x99b37b7fccAA7a1030617b6195eB3045c523BB97"
+    factory: null # TODO: bundle references UniV3 router/quoter; pad factory not found yet
+    priority: high
+
+dex:
+  - name: UniswapV3-Arc
+    url: https://radardex.pro
+    priority: critical
+    notes: >-
+      Canonical Uniswap V3 factory (listed in launchpads.discovered.yaml as uni_v3_factory_seen_in_lift_bundle).
+      1796 PoolCreated/84h; Lift, Tolly and RadarDEX launches pool here, and every major in major-coins.yaml has a
+      USDC pool on it (getPool verified) — this entry is what lets MAJOR_ANOMALY / LP_SURGE ping on mainnet.
+    networks:
+      mainnet:
+        factories:
+          - { address: "0xf0db7b58379503491d857db50ac9ece64c653918", kind: univ3, label: UniV3Factory }
+
+  - name: RadarDEX
+    url: https://radardex.pro
+    example_pair_or_token: https://radardex.pro/#0xeb64987643db71c76b2a2be7e723decc995e5b37
+    notes: DEX + market data; COOL example. Its "factories" are token launchers, not AMM factories (no PairCreated/PoolCreated).
+    priority: critical
+    networks:
+      mainnet:
+        factories:
+          # TokenLaunched(token,creator,pool,…) + InitialBuy — 568 launches/84h, pools on UniV3-Arc.
+          - { address: "0x4B638c1502a07A8E1a26112Ee98f51A3f34bC93a", kind: radar, label: token-launcher }
+          # Curve launcher (CurveCompleted/MigrationPoolConfigured in bytecode) — no logs in 600k blocks: decoder TODO.
+          - { address: "0x62d6e545eE3882a9BDE308a10A2B79e32B2D073A", kind: todo, label: curve-launcher }
+          # (0x0dCad158… also listed under RadarDEX in the discovered file = Warp launch factory; allowlisted under Warp.)
+        routers: ["0x53bf6b0684ec7ef91e1387da3d1a1769bc5a6f77"] # swap router

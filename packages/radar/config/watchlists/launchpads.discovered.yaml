@@ -1,0 +1,75 @@
+# Auto-scraped 2026-09-14 via site HTML/JS + eth_getCode on https://rpc.arc-scan.org (chain 5042).
+# Source of truth for allowlist candidates ? merge into launchpads.yaml after ABI decode TODOs.
+# Verified = getCode bytes > 0 on mainnet at scrape time.
+
+scraped_at: "2026-09-14"
+rpc_probe: "https://rpc.arc-scan.org"
+chain_id: 5042
+
+pads:
+  Lift:
+    url: https://lift.fun
+    source: https://lift.fun/config.js
+    factory: "0x3f29dD25D1F6ad3D09d1d4A880F8a869E3039153"   # verified
+    fee_locker: "0x98015DDa2B8810ab67903C726a0E424D6D51b1a9" # verified
+    lp_vault: "0x826D695E64A44C0347982EDA6D3183F12eB1AC4F"   # verified
+    notes: "Hardcodes chain 5042; graduation targets in config.js"
+
+  Warp:
+    url: https://circlewarp.fun
+    source: assets/index JS docs table
+    launch_factory_proxy: "0x0dCad158e98bC24455f9e94F46709d8a5F6D1255" # verified (proxy ~179b)
+    launch_factory_impl: "0x34988939648578a1d90Db742bc1C903fD6F7c1b0"  # verified
+    warpdex_factory_proxy: "0x32330C2400a6e0830D56661169eBB6C147E3577a" # verified
+    warpdex_router: "0x9D93c1B22E3fa6C817835513E76082089E98A9D7"      # verified
+    notes: "Subscribe create/migrate on launch factory proxy; pools on WarpDex factory"
+
+  Tolly:
+    url: https://tollylabs.com
+    factory: "0xcad7ee36ac193bf2eddb7b3e2736c5bdb8269c8b"  # verified mainnet custom pad
+    router: "0xceBC2e409A85CFA82B086674e6bc5bEd51692777"   # verified (guide)
+    notes: "Mainnet factory != testnet UniV3 bytecode ? needs custom decoder"
+
+  Dyor:
+    url: https://dyorv3.org
+    router: "0x33c2bfa0684342B210B62Ca7E92ABE3feCB0BFa3"  # verified (RadarDEX venue list)
+    dyor_v1_router: "0xcc9C4253A164F44526d2A8d33c3f7A3FFBd491ce" # verified
+    factory: null
+    notes: "Factory still TODO; Architects traded here"
+
+  Sharc:
+    url: https://sharc.fun
+    factory: null
+    notes: "Bundle references UniV3 router/quoter; pad factory not in first JS pass ? TODO"
+
+  Argus:
+    url: https://arguspad.io
+    factory: null
+    notes: "Huge SSR HTML with many token CAs; factory not labeled ? run deeper chunk scrape"
+
+  Long:
+    url: https://long.supply
+    factory: null
+    notes: "Page chunk had no factory CA; important RWA pad ? deeper scrape TODO"
+
+dex:
+  RadarDEX:
+    url: https://radardex.pro
+    swap_router: "0x53bf6b0684ec7ef91e1387da3d1a1769bc5a6f77" # verified
+    factories_verified:
+      - "0x62d6e545eE3882a9BDE308a10A2B79e32B2D073A"
+      - "0x4B638c1502a07A8E1a26112Ee98f51A3f34bC93a"
+      - "0x0dCad158e98bC24455f9e94F46709d8a5F6D1255" # also Warp launch factory
+    uni_v3_factory_seen_in_lift_bundle: "0xf0db7b58379503491d857db50ac9ece64c653918" # verified 24535b
+    notes: "Add verified factories to allowlist so major @everyone can fire"
+
+bridge:
+  Ellipse:
+    url: https://ellipse.fun
+    contracts: []  # many addresses in HTML ? needs labeled extraction
+    notes: "Deeper scrape TODO for bridge/CCTP contracts"
+
+next:
+  - Merge verified factories into config/watchlists/launchpads.yaml networks.mainnet
+  - Decode ABIs for Lift factory + Warp launch factory + Tolly mainnet
+  - Optional: ARC_MAINNET_HTTP_URL=https://rpc.arc-scan.org for discovery-only (not 24/7 WSS)

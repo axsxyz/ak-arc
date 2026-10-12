@@ -1,0 +1,246 @@
+[
+  {
+    "channel": "launchpads",
+    "payload": {
+      "embeds": [
+        {
+          "title": "NEW_LAUNCH · Lift",
+          "color": 3447003,
+          "fields": [
+            {
+              "name": "token",
+              "value": "[E/ACC 0xd8d7…0087](https://www.arcexplorer.org/token/0xd8d7404020459b10dca36eaa11d5389c831b0087)",
+              "inline": true
+            },
+            {
+              "name": "venue/pad",
+              "value": "Lift (lift)",
+              "inline": true
+            },
+            {
+              "name": "usd",
+              "value": "$3.50",
+              "inline": true
+            },
+            {
+              "name": "tx",
+              "value": "[0x6d58…333c](https://www.arcexplorer.org/tx/0x6d58616e1f3532c1470cf2d4e01737610f85abc5e1ff7d6e09d51e3c8d63333c)",
+              "inline": true
+            },
+            {
+              "name": "T+Xs",
+              "value": "T+1.5s",
+              "inline": true
+            },
+            {
+              "name": "name",
+              "value": "Effective Accelerationism",
+              "inline": true
+            },
+            {
+              "name": "creator",
+              "value": "[0xa16b…26d8](https://www.arcexplorer.org/address/0xa16bd4386d0a57c714dc8b9376c67e6cdeb226d8)",
+              "inline": true
+            },
+            {
+              "name": "pool",
+              "value": "[0xaa86…4132](https://www.arcexplorer.org/address/0xaa86f4e20ee878ac877f167c7269706478164132)",
+              "inline": true
+            },
+            {
+              "name": "pool trust",
+              "value": "verified (0xf0db…3918)",
+              "inline": true
+            }
+          ],
+          "footer": {
+            "text": "arc-mainnet | radar v1"
+          },
+          "timestamp": "2026-09-13T21:57:05.000Z",
+          "url": "https://www.arcexplorer.org/token/0xd8d7404020459b10dca36eaa11d5389c831b0087"
+        }
+      ],
+      "allowed_mentions": {
+        "parse": []
+      }
+    }
+  },
+  {
+    "channel": "launchpads",
+    "payload": {
+      "embeds": [
+        {
+          "title": "NEW_LAUNCH · Tolly",
+          "color": 3447003,
+          "fields": [
+            {
+              "name": "token",
+              "value": "[OS 0xd20b…82b4](https://www.arcexplorer.org/token/0xd20bac9c2b6ebe21d5df1a7dce091d7c5a7082b4)",
+              "inline": true
+            },
+            {
+              "name": "venue/pad",
+              "value": "Tolly (tolly)",
+              "inline": true
+            },
+            {
+              "name": "tx",
+              "value": "[0xb5dd…e1cf](https://www.arcexplorer.org/tx/0xb5dd19fa2ac53eba0a283ee300a8d268aebc484d98cc031dfd589440feeae1cf)",
+              "inline": true
+            },
+            {
+              "name": "T+Xs",
+              "value": "T+1.5s",
+              "inline": true
+            },
+            {
+              "name": "name",
+              "value": "The Economic OS",
+              "inline": true
+            },
+            {
+              "name": "creator",
+              "value": "[0x71e3…40fb](https://www.arcexplorer.org/address/0x71e386bbff9a2df6c731d0d4aad1d119bb6640fb)",
+              "inline": true
+            },
+            {
+              "name": "pool",
+              "value": "[0xf1f0…8d05](https://www.arcexplorer.org/address/0xf1f09239f8865646132ec9a9c9d5b12abaf48d05)",
+              "inline": true
+            },
+            {
+              "name": "pool trust",
+              "value": "verified (0xf0db…3918)",
+              "inline": true
+            }
+          ],
+          "footer": {
+            "text": "arc-mainnet | radar v1"
+          },
+          "timestamp": "2026-09-13T20:51:13.000Z",
+          "url": "https://www.arcexplorer.org/token/0xd20bac9c2b6ebe21d5df1a7dce091d7c5a7082b4"
+        }
+      ],
+      "allowed_mentions": {
+        "parse": []
+      }
+    }
+  },
+  {
+    "channel": "launchpads",
+    "payload": {
+      "embeds": [
+        {
+          "title": "NEW_LAUNCH · RadarDEX",
+          "color": 3447003,
+          "fields": [
+            {
+              "name": "token",
+              "value": "[CIRCLE 0xd899…7296](https://www.arcexplorer.org/token/0xd89989b014dea258e5a811eebbd5c57ea1227296)",
+              "inline": true
+            },
+            {
+              "name": "venue/pad",
+              "value": "RadarDEX (radar)",
+              "inline": true
+            },
+            {
+              "name": "tx",
+              "value": "[0xeb1c…9ebe](https://www.arcexplorer.org/tx/0xeb1cf0aeced5c58a7b937fb986958b42ff1192e988084c731fd5dadd23519ebe)",
+              "inline": true
+            },
+            {
+              "name": "T+Xs",
+              "value": "T+1.5s",
+              "inline": true
+            },
+            {
+              "name": "name",
+              "value": "Circle",
+              "inline": true
+            },
+            {
+              "name": "creator",
+              "value": "[0xd78f…5f43](https://www.arcexplorer.org/address/0xd78fc76a0505cb1b826742fe17686ba204385f43)",
+              "inline": true
+            },
+            {
+              "name": "pool",
+              "value": "[0x9d26…9520](https://www.arcexplorer.org/address/0x9d2684344d86aaaba4bee9cdeb12e8e76bdc9520)",
+              "inline": true
+            },
+            {
+              "name": "pool trust",
+              "value": "verified (0xf0db…3918)",
+              "inline": true
+            }
+          ],
+          "footer": {
+            "text": "arc-mainnet | radar v1"
+          },
+          "timestamp": "2026-09-13T20:27:44.000Z",
+          "url": "https://www.arcexplorer.org/token/0xd89989b014dea258e5a811eebbd5c57ea1227296"
+        }
+      ],
+      "allowed_mentions": {
+        "parse": []
+      }
+    }
+  },
+  {
+    "channel": "launchpads",
+    "payload": {
+      "embeds": [
+        {
+          "title": "NEW_LAUNCH · Warp",
+          "color": 3447003,
+          "fields": [
+            {
+              "name": "token",
+              "value": "[CIRCLE 0x3fb6…4710](https://www.arcexplorer.org/token/0x3fb6e51ae5567f66176be7d23f855445ad9a4710)",
+              "inline": true
+            },
+            {
+              "name": "venue/pad",
+              "value": "Warp (warp)",
+              "inline": true
+            },
+            {
+              "name": "tx",
+              "value": "[0xaa3d…9610](https://www.arcexplorer.org/tx/0xaa3de63af973239ad1ae160b59929b309622cb7fb085114b2a1f11a9414a9610)",
+              "inline": true
+            },
+            {
+              "name": "T+Xs",
+              "value": "T+1.5s",
+              "inline": true
+            },
+            {
+              "name": "name",
+              "value": "Circle",
+              "inline": true
+            },
+            {
+              "name": "creator",
+              "value": "[0xd78f…5f43](https://www.arcexplorer.org/address/0xd78fc76a0505cb1b826742fe17686ba204385f43)",
+              "inline": true
+            },
+            {
+              "name": "curve",
+              "value": "[0x9914…dc18](https://www.arcexplorer.org/address/0x991463ab77130e47b22c3d5f8ff2d730f9aadc18)",
+              "inline": true
+            }
+          ],
+          "footer": {
+            "text": "arc-mainnet | radar v1"
+          },
+          "timestamp": "2026-09-13T20:35:00.000Z",
+          "url": "https://www.arcexplorer.org/token/0x3fb6e51ae5567f66176be7d23f855445ad9a4710"
+        }
+      ],
+      "allowed_mentions": {
+        "parse": []
+      }
+    }
+  }
+]

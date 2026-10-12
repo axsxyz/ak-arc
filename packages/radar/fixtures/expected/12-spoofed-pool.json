@@ -1,0 +1,22 @@
+{
+  "posts": [],
+  "decisions": [
+    {
+      "type": "LP_SURGE",
+      "channel": null,
+      "ping": false,
+      "reason": "downgraded: usdCertain=true trusted=false",
+      "suppressed": null,
+      "usd": 50000
+    },
+    {
+      "type": "LP_SURGE",
+      "channel": null,
+      "ping": false,
+      "reason": "downgraded: usdCertain=true trusted=false",
+      "suppressed": null,
+      "usd": 50000
+    }
+  ],
+  "getLogsRanges": []
+}

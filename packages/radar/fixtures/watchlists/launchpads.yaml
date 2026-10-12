@@ -1,0 +1,14 @@
+pads:
+  - name: Tolly
+    factory: "0xcad7ee36ac193bf2eddb7b3e2736c5bdb8269c8b"
+    kind: univ3
+    priority: critical
+  - name: FixturePad
+    factory: "0xf00d00000000000000000000000000000000f00d"
+    kind: generic
+    priority: high
+dex:
+  - name: FixtureDEX
+    factory: "0xd0d0000000000000000000000000000000000d0d"
+    kind: univ2
+    priority: critical

@@ -1,0 +1,18 @@
+{
+  "name": "ak-arc",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "On-chain liquidity radar and cross-chain bridge-and-swap executor for the Arc chain (part of the ak toolkit)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "npm run test:unit -w packages/radar && npm run test:fixtures -w packages/radar && npm run test:alerts -w packages/radar && npm run test:unit -w packages/executor",
+    "typecheck": "npm run typecheck -w packages/radar && npm run typecheck -w packages/executor"
+  }
+}

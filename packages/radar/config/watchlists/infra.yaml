@@ -1,0 +1,30 @@
+explorer:
+  name: A/X Explorer
+  url: https://www.arcexplorer.org/
+  note: Independent Arc mainnet explorer (per site meta). Prefer CA links here in embeds when on mainnet.
+
+bridge:
+  - name: Ellipse
+    url: https://ellipse.fun
+    watch: true
+    channel: smart-flow
+    contracts: [] # TODO: no labeled bridge CAs yet — generic BRIDGE_FLOW (pipeline.onTransfer) stays inactive for Ellipse specifically; CCTP below is the active bridge signal.
+    note: App-level bridge front end, not itself CCTP. Resolve contract CAs from app config / first txs (TODO harness discovery).
+
+# CCTP V2, Base <-> Arc. Verified on chain 2026-09-15: Arc localDomain() == 26, Base remoteTokenMessengers(26) and
+# Arc remoteTokenMessengers(6) both wired, Arc localMinter matches. Drives BRIDGE_INFLOW (mint side, from
+# message_transmitter's MessageReceived + the paired USDC mint) and BRIDGE_OUTFLOW (burn side, from
+# token_messenger's DepositForBurn). Only this one corridor is wired as of the verification date; source_domain
+# below is the fallback used when MessageReceived's own sourceDomain field isn't decoded (best-effort event ABI,
+# never independently verified against Arc bytecode — see src/abi/cctp.ts).
+cctp:
+  message_transmitter: "0x81D40F21F12A8F0E3252Bccb954D722d4c464B64"
+  token_messenger: "0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d"
+  local_minter: "0xfd78EE919681417d192449715b2594ab58f5D002"
+  source_domain: 6
+  source_domain_label: Base
+  note: Verified on chain 2026-09-15. USDC ERC-20 interface is 6-dec at usdc.erc20_mirror below; native/fees are 18-dec.
+
+usdc:
+  erc20_mirror: "0x3600000000000000000000000000000000000000"
+  note: Confirm decimals() per chain; native gas is USDC 18-dec on Arc. The mint side of a CCTP arrival is logged by the chain's USDC system emitter (config/networks.ts usdcSystemEmitter), not by this address — see pipeline.ts onTransfer.

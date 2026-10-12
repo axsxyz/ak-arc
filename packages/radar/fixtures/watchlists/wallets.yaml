@@ -1,0 +1,4 @@
+wallets:
+  - address: "0x5a1e000000000000000000000000000000005a1e"
+    label: smart-1
+    tags: [smart]

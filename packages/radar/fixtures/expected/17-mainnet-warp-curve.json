@@ -1,0 +1,222 @@
+{
+  "posts": [
+    {
+      "channel": "launchpads",
+      "payload": {
+        "embeds": [
+          {
+            "title": "NEW_LAUNCH · Warp",
+            "color": 3447003,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[WTEST 0xcccc…c0c0](https://www.arcexplorer.org/token/0xcccc00000000000000000000000000000000c0c0)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "Warp (warp)",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0x50a3…5333](https://www.arcexplorer.org/tx/0x50a3313e82450748fbb7ec1507cebe679fe114be3968824e2afafb7ca2475333)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "name",
+                "value": "Warp Test",
+                "inline": true
+              },
+              {
+                "name": "creator",
+                "value": "[0x3333…3333](https://www.arcexplorer.org/address/0x3333000000000000000000000000000000003333)",
+                "inline": true
+              },
+              {
+                "name": "curve",
+                "value": "[0xc0c0…0c01](https://www.arcexplorer.org/address/0xc0c0000000000000000000000000000000000c01)",
+                "inline": true
+              }
+            ],
+            "footer": {
+              "text": "arc-mainnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:35:00.000Z",
+            "url": "https://www.arcexplorer.org/token/0xcccc00000000000000000000000000000000c0c0"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    },
+    {
+      "channel": "alerts",
+      "payload": {
+        "content": "@everyone",
+        "embeds": [
+          {
+            "title": "WATCHLIST_WALLET_FAST · smart-1",
+            "color": 15158332,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[WTEST 0xcccc…c0c0](https://www.arcexplorer.org/token/0xcccc00000000000000000000000000000000c0c0)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "Warp curve",
+                "inline": true
+              },
+              {
+                "name": "usd",
+                "value": "$600.00",
+                "inline": true
+              },
+              {
+                "name": "velocity",
+                "value": "$1.80k/min",
+                "inline": true
+              },
+              {
+                "name": "mcap",
+                "value": "$100.00k",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0xe1b7…798a](https://www.arcexplorer.org/tx/0xe1b7712b8fd52d2e329868cd84932d7dceb190d02f6acd3496a2a8703de5798a)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "wallet",
+                "value": "[smart-1](https://www.arcexplorer.org/address/0x5a1e000000000000000000000000000000005a1e)",
+                "inline": true
+              },
+              {
+                "name": "side",
+                "value": "buy",
+                "inline": true
+              },
+              {
+                "name": "curve age",
+                "value": "20s",
+                "inline": true
+              }
+            ],
+            "footer": {
+              "text": "arc-mainnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:35:20.000Z",
+            "url": "https://www.arcexplorer.org/token/0xcccc00000000000000000000000000000000c0c0"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": [
+            "everyone"
+          ]
+        }
+      }
+    },
+    {
+      "channel": "smart-flow",
+      "payload": {
+        "embeds": [
+          {
+            "title": "WALLET_ACTIVITY · smart-1",
+            "color": 15105570,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[WOLD 0xcccc…c0c1](https://www.arcexplorer.org/token/0xcccc00000000000000000000000000000000c0c1)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "Warp curve",
+                "inline": true
+              },
+              {
+                "name": "usd",
+                "value": "$700.00",
+                "inline": true
+              },
+              {
+                "name": "mcap",
+                "value": "$100.00k",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0x6737…ef51](https://www.arcexplorer.org/tx/0x673725b5b4918e98b7f54524c4887f770bcf516198c676ee4c7ac5bba009ef51)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "wallet",
+                "value": "[smart-1](https://www.arcexplorer.org/address/0x5a1e000000000000000000000000000000005a1e)",
+                "inline": true
+              },
+              {
+                "name": "side",
+                "value": "buy",
+                "inline": true
+              }
+            ],
+            "footer": {
+              "text": "arc-mainnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:35:30.000Z",
+            "url": "https://www.arcexplorer.org/token/0xcccc00000000000000000000000000000000c0c1"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "type": "NEW_LAUNCH",
+      "channel": "launchpads",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": null
+    },
+    {
+      "type": "WATCHLIST_WALLET_FAST",
+      "channel": "alerts",
+      "ping": true,
+      "reason": "hard rule WATCHLIST_WALLET_FAST",
+      "suppressed": null,
+      "usd": 600
+    },
+    {
+      "type": "WALLET_ACTIVITY",
+      "channel": "smart-flow",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": 700
+    }
+  ],
+  "getLogsRanges": []
+}

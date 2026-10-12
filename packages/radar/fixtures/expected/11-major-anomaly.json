@@ -1,0 +1,90 @@
+{
+  "posts": [
+    {
+      "channel": "alerts",
+      "payload": {
+        "content": "@everyone",
+        "embeds": [
+          {
+            "title": "MAJOR_ANOMALY",
+            "description": "5m vol $5.40k vs 1h baseline $500.00/5m → z=219.1 (threshold 5).",
+            "color": 15158332,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[COOL 0xeb64…5b37](https://testnet.arcscan.app/token/0xeb64987643db71c76b2a2be7e723decc995e5b37)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "FixtureDEX",
+                "inline": true
+              },
+              {
+                "name": "usd",
+                "value": "$5.40k",
+                "inline": true
+              },
+              {
+                "name": "velocity",
+                "value": "$1.08k/min",
+                "inline": true
+              },
+              {
+                "name": "lp",
+                "value": "$101.60k",
+                "inline": true
+              },
+              {
+                "name": "mcap",
+                "value": "$22.05M",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0xe998…b456](https://testnet.arcscan.app/tx/0xe998d1a438efb53391df6c0147070b2a3838b471f5e4e46f1b21125a7253b456)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "baseline samples",
+                "value": "56 min",
+                "inline": true
+              },
+              {
+                "name": "data",
+                "value": "testnet plumbing — not market intel",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "arc-testnet | radar v1"
+            },
+            "timestamp": "2026-09-10T01:36:00.000Z",
+            "url": "https://testnet.arcscan.app/token/0xeb64987643db71c76b2a2be7e723decc995e5b37"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": [
+            "everyone"
+          ]
+        }
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "type": "MAJOR_ANOMALY",
+      "channel": "alerts",
+      "ping": true,
+      "reason": "hard rule MAJOR_ANOMALY",
+      "suppressed": null,
+      "usd": 5400
+    }
+  ],
+  "getLogsRanges": []
+}

@@ -1,0 +1,242 @@
+{
+  "posts": [
+    {
+      "channel": "launchpads",
+      "payload": {
+        "embeds": [
+          {
+            "title": "NEW_LAUNCH · Tolly",
+            "color": 3447003,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[MEME2 0xaaaa…a002](https://testnet.arcscan.app/token/0xaaaa00000000000000000000000000000000a002)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "Tolly (univ3 fee 10000)",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0x4475…d78f](https://testnet.arcscan.app/tx/0x447500ac021642aaa88e4bd23711fb2b6c6d2dcd9d15537b1a5a63c003d7d78f)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "pool",
+                "value": "[0x9002…9002](https://testnet.arcscan.app/address/0x9002000000000000000000000000000000009002)",
+                "inline": true
+              },
+              {
+                "name": "quote",
+                "value": "USDC",
+                "inline": true
+              },
+              {
+                "name": "data",
+                "value": "testnet plumbing — not market intel",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "arc-testnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:35:00.000Z",
+            "url": "https://testnet.arcscan.app/token/0xaaaa00000000000000000000000000000000a002"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    },
+    {
+      "channel": "alerts",
+      "payload": {
+        "content": "@everyone",
+        "embeds": [
+          {
+            "title": "WATCHLIST_WALLET_FAST · smart-1",
+            "color": 15158332,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[MEME2 0xaaaa…a002](https://testnet.arcscan.app/token/0xaaaa00000000000000000000000000000000a002)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "Tolly",
+                "inline": true
+              },
+              {
+                "name": "usd",
+                "value": "$900.00",
+                "inline": true
+              },
+              {
+                "name": "velocity",
+                "value": "$1.80k/min",
+                "inline": true
+              },
+              {
+                "name": "mcap",
+                "value": "$50.00k",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0x3a0e…1f0a](https://testnet.arcscan.app/tx/0x3a0eb3e7b4743e624f97e4e14e73e7d8a5d89ca0aa5a511e56948b18a1771f0a)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "wallet",
+                "value": "[smart-1](https://testnet.arcscan.app/address/0x5a1e000000000000000000000000000000005a1e)",
+                "inline": true
+              },
+              {
+                "name": "side",
+                "value": "buy",
+                "inline": true
+              },
+              {
+                "name": "pool age",
+                "value": "30s",
+                "inline": true
+              },
+              {
+                "name": "data",
+                "value": "testnet plumbing — not market intel",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "arc-testnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:35:30.000Z",
+            "url": "https://testnet.arcscan.app/token/0xaaaa00000000000000000000000000000000a002"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": [
+            "everyone"
+          ]
+        }
+      }
+    },
+    {
+      "channel": "smart-flow",
+      "payload": {
+        "embeds": [
+          {
+            "title": "WALLET_ACTIVITY · smart-1",
+            "color": 15105570,
+            "fields": [
+              {
+                "name": "token",
+                "value": "[MEME2 0xaaaa…a002](https://testnet.arcscan.app/token/0xaaaa00000000000000000000000000000000a002)",
+                "inline": true
+              },
+              {
+                "name": "venue/pad",
+                "value": "Tolly",
+                "inline": true
+              },
+              {
+                "name": "usd",
+                "value": "$700.00",
+                "inline": true
+              },
+              {
+                "name": "velocity",
+                "value": "$384.00/min",
+                "inline": true
+              },
+              {
+                "name": "mcap",
+                "value": "$50.00k",
+                "inline": true
+              },
+              {
+                "name": "tx",
+                "value": "[0x5b9b…3085](https://testnet.arcscan.app/tx/0x5b9b13edbcc6e2c64639d4fb483e1eccdec0c7214575db15574dc6bc8bca3085)",
+                "inline": true
+              },
+              {
+                "name": "T+Xs",
+                "value": "T+1.5s",
+                "inline": true
+              },
+              {
+                "name": "wallet",
+                "value": "[smart-1](https://testnet.arcscan.app/address/0x5a1e000000000000000000000000000000005a1e)",
+                "inline": true
+              },
+              {
+                "name": "side",
+                "value": "buy",
+                "inline": true
+              },
+              {
+                "name": "pool age",
+                "value": "250s",
+                "inline": true
+              },
+              {
+                "name": "data",
+                "value": "testnet plumbing — not market intel",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "arc-testnet | radar v1"
+            },
+            "timestamp": "2026-09-10T00:39:10.000Z",
+            "url": "https://testnet.arcscan.app/token/0xaaaa00000000000000000000000000000000a002"
+          }
+        ],
+        "allowed_mentions": {
+          "parse": []
+        }
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "type": "NEW_LAUNCH",
+      "channel": "launchpads",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": null
+    },
+    {
+      "type": "WATCHLIST_WALLET_FAST",
+      "channel": "alerts",
+      "ping": true,
+      "reason": "hard rule WATCHLIST_WALLET_FAST",
+      "suppressed": null,
+      "usd": 900
+    },
+    {
+      "type": "WALLET_ACTIVITY",
+      "channel": "smart-flow",
+      "ping": false,
+      "reason": "specialty channel",
+      "suppressed": null,
+      "usd": 700
+    }
+  ],
+  "getLogsRanges": []
+}
