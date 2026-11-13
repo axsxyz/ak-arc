@@ -94,7 +94,7 @@ Executor (`packages/executor`):
 - **Option-shaped arguments eaten by npm.** Symptom: flags passed through `npm run … --` never reached the stage. Cause: npm rewrites option-shaped arguments into its own config, even after `--`. Fix: no npm scripts for stages; every run is `npx tsx`, and an npm-launched stage aborts with a one-line message (`packages/executor/src/config.ts`, `NPM_MESSAGE`).
 - **Public RPC bursts looked like on-chain answers.** Symptom: "could not complete this request" and empty-reason reverts during bursts. Cause: throttling wrapped by viem as a revert. Fix: the RPC pool's error classifier, rotation after `ARC_RPC_ROTATE_AFTER` transport failures, endpoint drop on quota/auth refusals, and rebroadcast of the same signed bytes after a lookup by hash (`packages/executor/src/rpc-pool.ts`, `packages/executor/src/chain.ts`).
 - **Dust pools.** Symptom: a token had three fee tiers holding < $0.001 USDC beside one deep pool; filling a dust tier is ~100% impact, and a dust trade could also fake a price move. Cause: tier selection by existence, price by any pool. Fix: the dominance-ratio guard in the executor and a single price source pool per major (deepest trusted pool ≥ `MAJOR_PRICE_MIN_LP_USD`) in the radar (`packages/executor/src/impact.ts`, `packages/radar/src/features/majors.ts`).
-- **Fast Transfer downgraded silently.** Symptom: attestation took far longer than the Fast Transfer target. Cause: the protocol fee is proportional to the amount, so a `maxFee` sized for a small amount is too low for a larger one [TODO: amount at which it was observed], and CCTP then downgrades to Standard Transfer instead of reverting. Fix: quote the fee from Iris immediately before every burn, abort if the threshold-1000 quote is missing, and emit `bridge.downgrade_detected` when attestation latency breaches `timing.fastTransferTargetMs` (`packages/executor/src/bridge.ts`, `packages/executor/src/mint-watch.ts`).
+- **Fast Transfer downgraded silently.** Symptom: attestation took far longer than the Fast Transfer target. Cause: the protocol fee is proportional to the amount, so a `maxFee` sized for a small amount is too low for a larger one, and CCTP then downgrades to Standard Transfer instead of reverting. Fix: quote the fee from Iris immediately before every burn, abort if the threshold-1000 quote is missing, and emit `bridge.downgrade_detected` when attestation latency breaches `timing.fastTransferTargetMs` (`packages/executor/src/bridge.ts`, `packages/executor/src/mint-watch.ts`).
 - **CCTP mints never decoded.** Symptom: a 24 h backtest recorded 0 `bridge_mint` events. Cause: `finalityThresholdExecuted` is indexed on Arc's `MessageReceived`, so the guessed ABI failed viem's strict topic-count check and the error was swallowed. Fix: corrected ABI, verified against a recorded mainnet mint (`packages/radar/src/abi/cctp.ts`, `packages/radar/test/fixtures/mainnet-real.test.ts`).
 - **Bridge inflows inflated by 1e12.** Symptom: a ~$1 mint priced as ~$1 trillion. Cause: the system emitter's `Transfer.value` is native 18-decimal USDC, but it was divided using the 6-decimal ERC-20 mirror's decimals. Fix: native decimals for that emitter, pinned by the recorded mint fixture (`packages/radar/src/pipeline.ts`, `onBridgeInflow`).
 
@@ -115,7 +115,7 @@ Running anything live is per package (see `packages/radar/README.md` and
 webhooks to post). The executor's `--dry-run` (the default) still needs a
 `PRIVATE_KEY`, live Base and Arc RPCs and gas on the wallet, because it
 reads real balances, allowances, fee quotes and pool state. An offline
-execution simulation is `[TODO: not implemented]`.
+execution simulation is not implemented yet.
 
 ## Configuration
 
@@ -180,17 +180,26 @@ radar `test:chain-probe`, `probe:mainnet`, `test:webhooks`, `harness`.
 ## Part of ak
 
 ak is an umbrella toolkit with one repository per chain or component
-(ak-core, ak-arc, ak-deploy [TODO: links], more to follow). ak-arc is the Arc chain
+(ak-core, ak-arc, ak-deploy, more to follow; only ak-arc is public so far). ak-arc is the Arc chain
 component.
 
 ## Status and limitations
 
-- Live operation figures are not in this repository: uptime `[TODO]`, alert precision `[TODO]`, live execution runs and tx/revert counts `[TODO]`, measured end-to-end latencies `[TODO]`.
+- Live operation figures are not in this repository yet: uptime, alert precision, live execution runs and tx/revert counts, measured end-to-end latencies.
 - The executor has no offline simulation; its dry run reads mainnet state with a real key (see Getting started).
 - Radar mainnet coverage gaps are listed in `packages/radar/README.md` ("Known gaps / TODO"): several launchpads have no factory address or decoder yet, graduations only fire for generic pads, and token/token pools are not USD-scored.
 - Holder counts are approximate: `holders≈` is reconstructed from Transfer logs since token birth and stays `n/a` until that history checks out (Σbalances == totalSupply); tokens that move balances without Transfer events drift.
 - CCTP domain 26 on mainnet was verified by observation, not from Circle's documentation, at the time of writing.
 - Designs and thresholds were tuned on Arc's early mainnet; treat every threshold as a starting point.
+
+## Open items
+
+Tracked here until they are done:
+
+- [ ] Offline execution simulation, so the executor's dry run no longer needs a real key and mainnet state.
+- [ ] Publish live operation figures: uptime, alert precision, execution runs and tx/revert counts, end-to-end latencies.
+- [ ] Record the transfer amount at which the Fast Transfer downgrade was observed (What broke).
+- [ ] Link the other ak repositories once they are public.
 
 ## License
 
